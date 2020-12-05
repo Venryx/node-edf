@@ -6,7 +6,7 @@ Note: Only EDF writing/serializing is implemented atm. For EDF reading/parsing, 
 * https://github.com/Pixpipe/edfdecoder
 * https://github.com/jusjusjus/edfjs
 * https://github.com/Pixpipe/edfdecoder
-* https://github.com/korob93/edf-node/tree/master/src
+* https://github.com/korob93/edf-node
 
 ### Installation
 

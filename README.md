@@ -22,6 +22,7 @@ For `FeatureOrFix` version-extending (recommended for libraries), prepend "`~`" 
 
 ```
 import {EDFPackage, WriteEDFHeader, WriteEDFPackage, AppendChunk, ChannelInfo, Chunk} from "node-edf";
+import paths from "path";
 
 function ExportNightEEGData(sessionFolderName: string, exportChannelsInOneFile = true) {
 	const path = GetSessionFolderPath(sessionFolderName); // project-specific
@@ -88,7 +89,7 @@ function ExportNightEEGData(sessionFolderName: string, exportChannelsInOneFile =
 }
 
 function CreateChannelInfo(data: Partial<ChannelInfo>) {
-	const data_final = E(
+	const data_final = Object.assign(
 		{
 			type: "MuseS",
 			dimensions: "unknown",

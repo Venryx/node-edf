@@ -1,0 +1,39 @@
+{
+  "name": "node-edf",
+  "description": "NodeJS library for reading and writing EDF files.",
+  "version": "0.0.1",
+  "author": "Venryx (https://venryx.com)",
+  "main": "Dist/index.js",
+  "typings": "Dist/index.d.ts",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Venryx/node-edf.git"
+  },
+  "keywords": [
+    "node",
+    "edf",
+    "parser",
+    "serializer"
+  ],
+  "scripts": {
+    "dev": "tsc --watch",
+    "dist": "tsc"
+  },
+  "peerDependencies": {
+    "uplot": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.10",
+    "eslint": "^7.15.0",
+    "eslint-config-vbase": "^1.0.6",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-only-warn": "^1.0.2",
+    "eslint-plugin-react": "^7.21.4",
+    "typescript": "^4.1.2"
+  },
+  "dependencies": {
+    "moment": "^2.29.1"
+  }
+}

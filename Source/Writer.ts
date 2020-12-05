@@ -9,28 +9,34 @@ export function WriteEDFPackage(pack: EDFPackage, stream: fs.WriteStream) {
 	}
 }
 
+function Str(length: number, val: any) {
+	const result: string = (val ?? "").toString();
+	if (result.length > length) throw new Error(`Val "${result}" exceeded string-length limit of ${length}.`);
+	return result.padEnd(length);
+}
+
 export function WriteEDFHeader(pack: EDFPackage, stream: fs.WriteStream) {
-	stream.write(pack.edfVersion.toString().padEnd(8));
-	stream.write(pack.patientID.padEnd(80));
-	stream.write(pack.recordingID.padEnd(80));
-	stream.write(moment(pack.startTime).format("DD.MM.YY"));
-	stream.write(moment(pack.startTime).format("HH.mm.ss"));
+	stream.write(Str(8, pack.edfVersion));
+	stream.write(Str(80, pack.patientID));
+	stream.write(Str(80, pack.recordingID));
+	stream.write(Str(8, moment(pack.startTime).format("DD.MM.YY")));
+	stream.write(Str(8, moment(pack.startTime).format("HH.mm.ss")));
 	const headerBytes = 256 + (256 * pack.channelInfos.length); // class itself is 256 bytes, plus 256 per channel-info structure
-	stream.write(headerBytes.toString().padEnd(8));
-	stream.write(pack.reservedStr.padEnd(44));
-	stream.write(pack.chunks.length.toString().padEnd(8));
-	stream.write(pack.chunkDuration.toString().padEnd(8));
-	stream.write(pack.channelInfos.length.toString().padEnd(4));
-	pack.channelInfos.forEach(a=>stream.write(a.name.padEnd(16)));
-	pack.channelInfos.forEach(a=>stream.write(a.type.padEnd(80)));
-	pack.channelInfos.forEach(a=>stream.write(a.dimensions.padEnd(8)));
-	pack.channelInfos.forEach(a=>stream.write(a.physicalMin.toString().padEnd(8)));
-	pack.channelInfos.forEach(a=>stream.write(a.physicalMax.toString().padEnd(8)));
-	pack.channelInfos.forEach(a=>stream.write(a.digitalMin.toString().padEnd(8)));
-	pack.channelInfos.forEach(a=>stream.write(a.digitalMax.toString().padEnd(8)));
-	pack.channelInfos.forEach(a=>stream.write(a.prefilteringInfo.toString().padEnd(80)));
-	pack.channelInfos.forEach(a=>stream.write(a.sampleCountPerChunk.toString().padEnd(8)));
-	pack.channelInfos.forEach(a=>stream.write(a.reservedStr.toString().padEnd(32)));
+	stream.write(Str(8, headerBytes));
+	stream.write(Str(44, pack.reservedStr));
+	stream.write(Str(8, pack.chunks.length));
+	stream.write(Str(8, pack.chunkDuration));
+	stream.write(Str(4, pack.channelInfos.length));
+	pack.channelInfos.forEach(a=>stream.write(Str(16, a.name)));
+	pack.channelInfos.forEach(a=>stream.write(Str(80, a.type)));
+	pack.channelInfos.forEach(a=>stream.write(Str(8, a.dimensions)));
+	pack.channelInfos.forEach(a=>stream.write(Str(8, a.physicalMin)));
+	pack.channelInfos.forEach(a=>stream.write(Str(8, a.physicalMax)));
+	pack.channelInfos.forEach(a=>stream.write(Str(8, a.digitalMin)));
+	pack.channelInfos.forEach(a=>stream.write(Str(8, a.digitalMax)));
+	pack.channelInfos.forEach(a=>stream.write(Str(80, a.prefilteringInfo)));
+	pack.channelInfos.forEach(a=>stream.write(Str(8, a.sampleCountPerChunk)));
+	pack.channelInfos.forEach(a=>stream.write(Str(32, a.reservedStr)));
 }
 
 export function AppendChunk(chunk: Chunk, stream: fs.WriteStream, channelInfos: ChannelInfo[]) {
@@ -43,7 +49,9 @@ export function AppendChunk(chunk: Chunk, stream: fs.WriteStream, channelInfos: 
 	let offset = 0;
 	for (const channelSamples of chunk.channelSamples) {
 		for (const sample of channelSamples) {
-			buffer.writeInt16LE(Math.floor((sample * 32768) / 188000), offset);
+			//buffer.writeInt16LE(parseInt(((sample * 32768) / 188000).toString()), offset);
+			//buffer.writeInt16LE(Math.floor((sample * 32768) / 188000), offset);
+			buffer.writeInt16LE(sample, offset);
 			offset += 2;
 		}
 	}

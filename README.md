@@ -15,6 +15,8 @@ For `FeatureOrFix` version-extending (recommended for libraries), prepend "`~`" 
 ### Usage
 
 ```
+import {EDFPackage, WriteEDFHeader, WriteEDFPackage, AppendChunk, ChannelInfo, Chunk} from "node-edf";
+
 function ExportNightEEGData(sessionFolderName: string, exportChannelsInOneFile = true) {
 	const path = GetSessionFolderPath(sessionFolderName); // project-specific
 	console.log(`Starting export of session: ${sessionFolderName}`);

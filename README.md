@@ -24,10 +24,10 @@ function ExportNightEEGData(sessionFolderName: string, exportChannelsInOneFile =
 	// project-specific
 	const sessionInfo = JSON.parse(ReadFileTextSync_Safe(paths.join(path, "SessionInfo.json")) ?? `{}`)
 	const data = {
-		Forehead_Left: new Float32Array(GetEEGSamples("EEG_Left.json")),
-		Forehead_Right: new Float32Array(EEGDataToArray(rightEEG, false, 0)),
-		Ear_Left: new Float32Array(EEGDataToArray(leftEarEEG, false, 0)),
-		Ear_Right: new Float32Array(EEGDataToArray(rightEarEEG, false, 0)),
+		Forehead_Left: new Float32Array(GetEEGSamples("EEG_Forehead_Left.json")),
+		Forehead_Right: new Float32Array(GetEEGSamples("EEG_Forehead_Right.json")),
+		Ear_Left: new Float32Array(GetEEGSamples("EEG_Ear_Left.json")),
+		Ear_Right: new Float32Array(GetEEGSamples("EEG_Ear_Right.json")),
 	};
 
 	if (exportChannelsInOneFile) {

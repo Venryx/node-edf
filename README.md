@@ -1,6 +1,12 @@
 # Node EDF
 
-NodeJS library for reading and writing EDF files. (WIP)
+NodeJS library for reading and writing EDF files.
+
+Note: Only EDF writing/serializing is implemented atm. For EDF reading/parsing, consider:
+* https://github.com/Pixpipe/edfdecoder
+* https://github.com/jusjusjus/edfjs
+* https://github.com/Pixpipe/edfdecoder
+* https://github.com/korob93/edf-node/tree/master/src
 
 ### Installation
 
